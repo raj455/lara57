@@ -1,5 +1,9 @@
 @extends('layouts.backend.app')
 
+@section('title')
+Dashboard
+@endsection
+
 @push('css')
 
 @endpush
