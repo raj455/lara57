@@ -1,7 +1,7 @@
 @extends('layouts.backend.app')
 
 @section('title')
-Category | Dashboard
+Post | Dashboard
 @endsection
 
 @push('css')
@@ -12,9 +12,9 @@ Category | Dashboard
 @section('content')
 <div class="container-fluid">
      <div class="block-header">
-         <a class="btn bg-blue waves-effect" href="{{ route('admin.category.create') }}">
+         <a class="btn bg-blue waves-effect" href="{{ route('admin.post.create') }}">
             <i class="material-icons">add</i>
-         <span>Add New Category</span>
+         <span>Add New Post</span>
      </a>
      </div>                   
     <!-- Exportable Table -->
@@ -23,8 +23,8 @@ Category | Dashboard
             <div class="card">
                 <div class="header">
                     <h2>
-                        ALL CATEGORIES
-                        <span class="badge bg-blue">{{ $categories->count() }}</span>
+                        ALL POSTS
+                        <span class="badge bg-blue">{{ $posts->count() }}</span>
                     </h2>                    
                 </div>
                 <div class="body">
@@ -33,8 +33,11 @@ Category | Dashboard
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Post Count</th>                                    
+                                    <th>Title</th>                                    
+                                    <th>Author</th>                                    
+                                    <th><i class="material-icons">visibility</i></th>
+                                    <th>Is Approved</th>                                    
+                                    <th>Status</th>                                    
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Actions</th>
@@ -43,8 +46,11 @@ Category | Dashboard
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>  
-                                    <th>Post Count</th>                                  
+                                    <th>Title</th>                                    
+                                    <th>Author</th>                                    
+                                    <th><i class="material-icons">visibility</i></th>
+                                    <th>Is Approved</th>                                    
+                                    <th>Status</th>                                    
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Actions</th>                                    
@@ -52,19 +58,34 @@ Category | Dashboard
                             </tfoot>
                             <tbody>
 
-                                @foreach($categories as $key => $value)
+                                @foreach($posts as $key => $value)
                                 <tr class="text-center">
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $value->name }}</td>
-                                    <td>{{ $value->posts->count() }}</td>
+                                    <td>{{ $value->title }}</td>
+                                    <td>{{ $value->user->name }}</td>
+                                    <td>
+                                        @if($value->is_approved)
+                                            <span class="badge bg-blue">Approved</span>
+                                        @else
+                                            <span class="badge bg-pink">Pending</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($value->status)
+                                            <span class="badge bg-blue">Published</span>
+                                        @else
+                                            <span class="badge bg-pink">UnPublished</span>
+                                        @endif
+                                    </td>
+                                    
                                     <td>{{ $value->created_at }}</td>
                                     <td>{{ $value->updated_at }}</td>
                                     <td>
                                         <a href="" class="btn btn-info btn-xs waves-effect"><i class="material-icons">remove_red_eye</i></a>
-                                        <a href="{{ route('admin.category.edit',['tag' => $value->id]) }}" class="btn btn-success btn-xs waves-effect"><i class="material-icons">edit</i></a>
-                                        <a class="btn btn-danger btn-xs waves-effect" href="{{ route('admin.category.destroy',['tag' => $value->id]) }}" onclick="event.preventDefault();document.getElementById('delForm').submit();"><i class="material-icons">delete</i></a>
+                                        <a href="{{ route('admin.post.edit',['post' => $value->id]) }}" class="btn btn-success btn-xs waves-effect"><i class="material-icons">edit</i></a>
+                                        <a class="btn btn-danger btn-xs waves-effect" href="{{ route('admin.post.destroy',['post' => $value->id]) }}" onclick="event.preventDefault();document.getElementById('delForm').submit();"><i class="material-icons">delete</i></a>
 
-                                        <form id="delForm" method="POST" style="display:none;" action="{{ route('admin.category.destroy',['tag' => $value->id]) }}">
+                                        <form id="delForm" method="POST" style="display:none;" action="{{ route('admin.post.destroy',['post' => $value->id]) }}">
                                             @csrf
                                             @method('DELETE')
                                         

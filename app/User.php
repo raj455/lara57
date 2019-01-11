@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Post;
 use App\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,5 +33,9 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

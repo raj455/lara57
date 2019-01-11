@@ -24,6 +24,7 @@ Tag | Dashboard
                 <div class="header">
                     <h2>
                         ALL TAGS
+                        <span class="badge bg-blue">{{ $tags->count() }}</span>
                     </h2>                    
                 </div>
                 <div class="body">
@@ -32,7 +33,8 @@ Tag | Dashboard
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>                                    
+                                    <th>Name</th>
+                                    <th>Post Count</th>                                    
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Actions</th>
@@ -41,7 +43,8 @@ Tag | Dashboard
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>                                    
+                                    <th>Name</th>  
+                                    <th>Post Count</th>                                  
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Actions</th>                                    
@@ -53,6 +56,7 @@ Tag | Dashboard
                                 <tr class="text-center">
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $value->name }}</td>
+                                    <td>{{ $value->posts->count() }}</td>
                                     <td>{{ $value->created_at }}</td>
                                     <td>{{ $value->updated_at }}</td>
                                     <td>
